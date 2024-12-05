@@ -1,0 +1,22 @@
+<nav>
+        <ul class="desktop-menu">
+                <li style="margin-right: 0px;">
+                    <a href="/p/index.html" style="padding-top: 6px; padding-bottom: 6px; padding-right: 15px; padding-left: 15px;">
+                        <img src="/icons/bs-logo.svg" alt="Ben Smith Logo" style="width: 35px; margin: 0px; padding-left: 0px;">
+                    </a>
+                </li>
+                <li><a href="/p/blog.html" class="navlink">Blog</a></li>
+                <li><a href="/p/everyday.html" class="navlink">Everydays</a></li>
+                <li><a href="https://hachyderm.io/@bensmith" class="navlink" target="_blank">Mastodon</a></li>
+                <li class="hamburger-menu" style="margin-right: 0px;">
+                    <a href="javascript:void(0);" onclick="showMobileMenu()">
+                        ☰
+                    </a>
+                </li> 
+            </ul>
+            <ul class="mobile-menu" id="mobile-links">
+                <li><a href="/p/blog.html" class="mobile-menu-link">Blog</a></li>
+                <li><a href="/p/everyday.html" class="mobile-menu-link">Everydays</a></li>
+                <li><a href="https://hachyderm.io/@bensmith" class="mobile-menu-link">Mastodon</a></li>
+            </ul>
+        </nav>
