@@ -1,11 +1,13 @@
 from pathlib import Path
+import shutil
+import os
 
-def count_files_in_directory(directory_path):
-    return len([file for file in Path(directory_path).iterdir() if file.is_file()])
+def count_files_in_directory(staging_everydays_directory_path):
+    return len([file for file in Path(staging_everydays_directory_path).iterdir() if file.is_file()])
 
 
-def find_file_by_prefix(directory_path, prefix):
-    for file in Path(directory_path).iterdir():
+def find_file_by_prefix(staging_everydays_directory_path, prefix):
+    for file in Path(staging_everydays_directory_path).iterdir():
         if file.is_file() and file.name.startswith(prefix):
             return file.name
     return None
@@ -36,15 +38,24 @@ def prepend_zeros(number):
         number = str(number)
     return number
 
-directory_path = '../everydays'
+# Staging
+staging_everydays_directory_path = '../everydays'
 
-for x in range(1, count_files_in_directory(directory_path)):
+# Site
+site_everydays_directory_path = '../../tiika/everydays'
 
-    directory_path = '../everydays'
+# Move Everydays images from staging to site
+for filename in os.listdir(staging_everydays_directory_path ):
+    source_file = os.path.join(staging_everydays_directory_path , filename)
+    destination_file = os.path.join(site_everydays_directory_path, filename)
+
+for x in range(1, count_files_in_directory(staging_everydays_directory_path)):
+
+    staging_everydays_directory_path = '../everydays'
 
     # Determines the next art piece and if it is the final one
     nextPiece = x + 1
-    if nextPiece > (count_files_in_directory(directory_path) + 1):
+    if nextPiece > (count_files_in_directory(staging_everydays_directory_path) + 1):
         finalPiece = True
     else: 
         finalPiece = False
@@ -59,8 +70,8 @@ for x in range(1, count_files_in_directory(directory_path)):
     prepend_zeros(previousPiece)
 
 
-    print(f"{x} {directory_path} {prepend_zeros(x)}")
-    fileName = find_file_by_prefix(directory_path, prepend_zeros(x))
+    print(f"{x} {staging_everydays_directory_path} {prepend_zeros(x)}")
+    fileName = find_file_by_prefix(staging_everydays_directory_path, prepend_zeros(x))
     artName = transform_filename(fileName)
     
     previousPiece = x - 1
@@ -76,6 +87,7 @@ for x in range(1, count_files_in_directory(directory_path)):
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+        <main>
         <nav>
         <ul class="desktop-menu">
                 <li style="margin-right: 0px;">
@@ -129,6 +141,10 @@ for x in range(1, count_files_in_directory(directory_path)):
 
         <script src="/js/menu.js"></script>
         <script src="/js/randomArt.js"></script>
+    </main>
+<footer>
+    <p>&copy; 2025 Ben Smith</p>
+</footer>
 </body>
 </html>
             """)

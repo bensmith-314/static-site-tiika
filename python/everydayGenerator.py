@@ -1,12 +1,12 @@
 from pathlib import Path
 import markdown
 
-def count_files_in_directory(directory_path):
-    return len([file for file in Path(directory_path).iterdir() if file.is_file()])
+def count_files_in_directory(staging_everyday_small_path):
+    return len([file for file in Path(staging_everyday_small_path).iterdir() if file.is_file()])
 
 
-def find_file_by_prefix(directory_path, prefix):
-    for file in Path(directory_path).iterdir():
+def find_file_by_prefix(staging_everyday_small_path, prefix):
+    for file in Path(staging_everyday_small_path).iterdir():
         if file.is_file() and file.name.startswith(prefix):
             return file.name
     return None
@@ -37,13 +37,16 @@ def prepend_zeros(number):
         number = str(number)
     return number
 
-directory_path = '../../tiika/everydays_small'
-page_path = '../../tiika/p/everyday.html'
+staging_everyday_small_path = '../../tiika/everydays_small'
+site_page_path = '../../tiika/p/everyday.html'
+
+# Convert and move small images from staging to site
+
 
 
 # WRITING HTML ===========================================
 
-f = open("../../tiika/p/everyday.html", 'w')
+f = open(site_page_path, 'w')
 f.write("""<!DOCTYPE html>
 <html lang="en">""")
 
@@ -53,7 +56,7 @@ for each in head:
     f.write(each)
 head.close()
 
-f.write("<body>")
+f.write("<body><main>")
 
 # Write Navigation
 nav = open('../html_snippets/nav.txt', 'r')
@@ -71,7 +74,7 @@ text.close()
 f.write('<div class="image-grid">\n')
 
 # Generate each image and link
-for x in range(count_files_in_directory(directory_path), 0, -1):
+for x in range(count_files_in_directory(staging_everyday_small_path), 0, -1):
     f.write(f'\t\t\t<a href="/i/{prepend_zeros(x)}.html" title="Day {transform_filename(find_file_by_prefix('../everydays_small', prepend_zeros(x)))}">\n')
     f.write(f'\t\t\t\t<img src="/../everydays_small/{find_file_by_prefix('../everydays_small', prepend_zeros(x))}" alt="Day {transform_filename(find_file_by_prefix('../everydays_small', prepend_zeros(x)))}">\n')
     f.write('\t\t\t</a>\n')
@@ -80,6 +83,10 @@ for x in range(count_files_in_directory(directory_path), 0, -1):
 
 f.write("""</div>
     <script src="/js/menu.js"></script>
+    </main>
+<footer>
+    <p>&copy; 2025 Ben Smith</p>
+</footer>
 </body>
 </html>""")
 
