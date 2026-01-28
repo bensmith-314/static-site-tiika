@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artwork Gallery</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="me" href="https://hachyderm.io/@bensmith">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{PAGE_DESCRIPTION}}">
+  <meta name="keywords" content="{{PAGE_KEYWORDS}}">
+  <link rel="canonical" href="{{PAGE_URL}}">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Open Graph / Social Card -->
+  <meta property="og:title" content="{{PAGE_TITLE}}">
+  <meta property="og:description" content="{{PAGE_DESCRIPTION}}">
+  <meta property="og:image" content="{{PAGE_IMAGE}}">
+  <meta property="og:url" content="{{PAGE_URL}}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Tiika">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:alt" content="{{IMAGE_DESCRIPTION}}">
+
+  <meta name="author" content="Ben Smith">
+  <meta name="fediverse:creator" content="@bensmith@hachyderm.io">
+  <link rel="me" href="https://hachyderm.io/@bensmith">
 </head>

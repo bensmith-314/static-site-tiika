@@ -1,6 +1,32 @@
 
 function Get-HeadHTML {
-    return Get-Content $(Join-Path $PSScriptRoot "../html_snippets/head.txt")
+    param(
+        [Parameter(Mandatory)]
+        [string]$Title,
+        [string]$Description = "",
+        [string[]]$Keywords = @(),
+        [string]$ImageUrl = "https://tiika.co/icons/site-logos/site-logo-share.png",
+        [string]$PageUrl = "",
+        [string]$ImageDescription = "Tiika by Ben Smith"
+    )
+
+    $snippetPath = Join-Path $PSScriptRoot "../html_snippets/head.txt"
+    $snippet = Get-Content $snippetPath -Raw
+
+    $keywordString = ($Keywords -join ", ")
+
+    if (-not $PageUrl){
+        $PageUrl = "https://tiika.co"
+    } 
+
+    $snippet = $snippet.Replace("{{PAGE_TITLE}}", $Title)
+    $snippet = $snippet.Replace("{{PAGE_DESCRIPTION}}", $Description)
+    $snippet = $snippet.Replace("{{PAGE_KEYWORDS}}", $keywordString)
+    $snippet = $snippet.Replace("{{PAGE_IMAGE}}", $ImageUrl)
+    $snippet = $snippet.Replace("{{PAGE_URL}}", $PageUrl)
+    $snippet = $snippet.Replace("{{IMAGE_DESCRIPTION}}", $ImageDescription)
+
+    return $snippet
 }
 
 function Get-NavHTML {

@@ -16,11 +16,12 @@ ForEach-Object {
         # Access fields
         $slug = $yamlObject.slug
         $articleInfo = [ordered]@{
-            title   = $yamlObject.title
-            date    = $yamlObject.date
-            time    = $yamlObject.time
-            summary = $yamlObject.summary
-            draft   = $yamlObject.draft
+            title       = $yamlObject.title
+            date        = $yamlObject.date
+            time        = $yamlObject.time
+            summary     = $yamlObject.summary
+            description = $yamlObject.description
+            draft       = $yamlObject.draft
         }
 
         # Initialize dictionary if it doesn't exist

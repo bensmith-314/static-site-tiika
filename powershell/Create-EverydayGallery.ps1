@@ -10,19 +10,19 @@ $jsonData = Get-Content $jsonPath -Raw | ConvertFrom-Json
 
 Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaPath | Measure-Object).Count) Files in $everydaysSmallTiikaPath"
 
-# Sync everydays_small from static generator to tiika
-Get-ChildItem $everydaysSmallPath | 
-ForEach-Object {
-    $sourceImage = $_.FullName # Source image in /Users/bensmith/Documents/Tiika/Website Images/ as defined above
-    $targetImage = Join-Path $everydaysSmallTiikaPath $_.Name # Image in static-site-tiika/everydays
+# Verify Folder Exists
+New-Item -ItemType Directory -Path $everydaysSmallTiikaPath -Force | Out-Null
 
-    # Check if the given source image exists, if not copy it over
-    if (-not (Test-Path $targetImage)) { 
-        Write-Host "[Copying]" -NoNewline -BackgroundColor Blue
-        Write-Host " $($_.Name)" -NoNewline
-        Copy-Item $sourceImage $targetImage
-        Write-Host "`r[Copied]" -NoNewline -BackgroundColor Green
-        Write-Host " $($_.Name)    "
+# Sync everydays_small from static generator to tiika
+Get-ChildItem $everydaysSmallPath -File |
+Where-Object { $_.Extension -eq ".jpg" } |
+ForEach-Object {
+    $src = $_
+    $targetImage = Join-Path $everydaysSmallTiikaPath $src.Name
+    $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
+
+    if ($null -eq $dst) {
+        Copy-Item $src.FullName $targetImage -Force
     }
 }
 
@@ -34,7 +34,12 @@ Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaP
 $html = New-Object System.Text.StringBuilder
 
 # Add parts to it
-[void]$html.AppendLine((Get-HeadHTML))
+[void]$html.AppendLine((
+    Get-HeadHTML -Title "Everyday Artwork Gallery" `
+                 -Description "A reverse chronological selection of all the everyday artwork I've created" `
+                 -Keywords @("Tiika", "Archive", "Gallery", "Human-made", "Artwork", "Collection", "Ben Smith") `
+                 -PageURL "https://tiika.co/everyday"
+))
 [void]$html.AppendLine("<body><main>")
 [void]$html.AppendLine((Get-NavHTML))
 

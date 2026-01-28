@@ -6,54 +6,45 @@ $everydaysSmallPath = Join-Path $PSScriptRoot "../everydays_small/"
 # TKTKTK Create some kind of staging area for art pieces to be put and then renamed
 # Then put in the appropriate folders
 
-# Copy everydays from Website images to this working directory
+# Verify Folder Exists
+New-Item -ItemType Directory -Path $everydaysPath -Force | Out-Null
+
+# Copy everydays from Website Images to working directory (only if missing/changed)
 Write-Host "Copying images over to the site generator"
 
-# Testing where this issue is with everyday syncing TKTKTK remove when resolved
-Write-Host "$((Get-ChildItem $websiteImagesOriginPath | Measure-Object).Count) Files in $websiteImagesOriginPath"
-Write-Host "$((Get-ChildItem $everydaysPath | Measure-Object).Count) Files in $everydaysPath"
+# Get-ChildItem $websiteImagesOriginPath -File |
+# Where-Object { $_.Extension -eq ".jpg" } |
+# ForEach-Object {
+#     $src = $_
+#     $targetImage = Join-Path $everydaysPath $src.Name
+#     $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
 
-Get-ChildItem $websiteImagesOriginPath | 
-ForEach-Object {
-    $sourceImage = $_.FullName # Source image in /Users/bensmith/Documents/Tiika/Website Images/ as defined above
-    $targetImage = Join-Path $everydaysPath $_.Name # Image in static-site-tiika/everydays
+#     if ($null -eq $dst -or $src.Length -ne $dst.Length -or $src.LastWriteTime -gt $dst.LastWriteTime) {
+#         Copy-Item $src.FullName $targetImage -Force
+#     }
+# }
 
-    # Check if the given source image exists, if not copy it over
-    if (-not (Test-Path $targetImage)) { 
-        Write-Host "[Copying]" -NoNewline -BackgroundColor Blue
-        Write-Host " $($_.Name)" -NoNewline
-        Copy-Item $sourceImage $targetImage
-        Write-Host "`r[Copied]" -NoNewline -BackgroundColor Green
-        Write-Host " $($_.Name)    "
-    }
-}
+rsync -av --update `
+  --include='*.jpg' `
+  --exclude='*' `
+  "$websiteImagesOriginPath/" `
+  "$everydaysPath"
 
-# Write-Host " $($_.Name)" -NoNewline
-# rsync -av $websiteImagesOriginPath $everydaysPath > $null 2>&1
-# Write-Host "`r[Synced Everyday Images]" -NoNewline -BackgroundColor Green -ForegroundColor White
-# Write-Host " $($_.Name)"
+Pause
 
-# Testing where this issue is with everyday syncing TKTKTK remove when resolved
-Write-Host "$((Get-ChildItem $websiteImagesOriginPath | Measure-Object).Count) Files in $websiteImagesOriginPath"
-Write-Host "$((Get-ChildItem $everydaysPath | Measure-Object).Count) Files in $everydaysPath"
+# Verify Folder Exists
+New-Item -ItemType Directory -Path $everydaysSmallPath -Force | Out-Null
 
 # Resize new images from everydays to everydays_small
-# TKTKTK there is something wrong here or with the rysnc above
-# Issue might be in the transfer of images over to the tiika folders from the static folders
-# I need to check for other rsyncs, I think the static-site-tiika side is good, but the tiika side needs fixing
+Get-ChildItem -Path $everydaysPath -File |
+Where-Object { $_.Extension -eq ".jpg" } |
+ForEach-Object {
+    $src = $_
+    $targetImage = Join-Path $everydaysSmallPath $src.Name
+    $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
 
-Get-ChildItem -Path $everydaysPath | ForEach-Object {
-    $sourceImage = $_.FullName
-    $targetImage = Join-Path $everydaysSmallPath $_.Name
-
-    if ((-not (Test-Path $targetImage)) -or ((Get-Item $sourceImage).LastWriteTime -gt (Get-Item $targetImage).LastWriteTime)) {
-        Write-Host "[Resizing]" -NoNewline -BackgroundColor Blue -ForegroundColor White
-        Write-Host " $($_.Name)" -NoNewline
-
-        sips -Z 300 "$sourceImage" --out "$targetImage" > $null 2>&1
-
-        Write-Host "`r[Resized]" -NoNewline -BackgroundColor Green -ForegroundColor White
-        Write-Host " $($_.Name) "
+    if ($null -eq $dst -or $src.LastWriteTime -gt $dst.LastWriteTime) {
+        sips -Z 300 $src.FullName --out $targetImage > $null 2>&1
     }
 }
 
@@ -79,22 +70,35 @@ ForEach-Object {
     . "$PSScriptRoot/Create-Articles.ps1" -FilePath $_.FullName
 }
 
-# Copy Over Images From Local to Site
-# TKTKTK: I think this is good now. Check back later, 
-# was having an issue of duplicating article images
-$articleImagesOriginPath = Join-Path $PSScriptRoot "../images/"
+# Copy Over Images From Local to Site (only if missing or changed)
+
+$articleImagesOriginPath      = Join-Path $PSScriptRoot "../images/"
 $articleImagesDestinationPath = Join-Path $PSScriptRoot "../../tiika/images"
 
+Write-Host "Copying article images to site output"
+
 Get-ChildItem -Path $articleImagesOriginPath -Recurse -File |
+Where-Object { $_.Extension -in @(".jpg", ".svg") } |
 ForEach-Object {
-    $subfile = $_.FullName.Substring($articleImagesOriginPath.Length - 14)
-    $subfolder = $subfile.Split("/")
-    if (($subfile.Substring($subfile.Length - 4) -eq ".jpg") -or ($subfile.Substring($subfile.Length - 4) -eq ".svg")) {
-        
-        New-Item -ItemType Directory (Join-Path $articleImagesDestinationPath $subfolder[0]) -Force
-        if (-not (Test-Path ((Join-Path $articleImagesDestinationPath $subfile)))) {
-            Copy-Item $_ (Join-Path $articleImagesDestinationPath $subfile)
-        }
+    $src = $_
+
+    # Compute relative path safely
+    $relativePath = $src.FullName.Substring($articleImagesOriginPath.Length)
+    $targetPath   = Join-Path $articleImagesDestinationPath $relativePath
+
+    # Ensure destination directory exists
+    $targetDir = Split-Path $targetPath -Parent
+    New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+
+    $dst = Get-Item $targetPath -ErrorAction SilentlyContinue
+
+    if (
+        $null -eq $dst -or
+        $src.Length -ne $dst.Length -or
+        $src.LastWriteTime -gt $dst.LastWriteTime
+    ) {
+        Copy-Item $src.FullName $targetPath -Force
+        Write-Host "[Copied]" $relativePath
     }
 }
 

@@ -6,8 +6,25 @@ param(
 
 $html = New-Object System.Text.StringBuilder
 
+# Get Article Title and Description
+$markdownContent = Get-Content $FilePath -Raw
+if ($markdownContent -match "(?s)^---\s*(.*?)\s*---") {
+    $yamlText = $matches[1]
+    
+    # Convert YAML to PowerShell object
+    $yamlObject = $yamlText | ConvertFrom-Yaml
+
+    # Access fields
+    $title       = $yamlObject.title
+    $description = $yamlObject.description
+}
+
 # Add parts to it
-[void]$html.AppendLine((Get-HeadHTML))
+[void]$html.AppendLine((
+    Get-HeadHTML -Title $title `
+                 -Description $description `
+                 -Keywords @("Tiika", "Human-made", "Article", "Ben Smith") `
+))
 [void]$html.AppendLine("<body><main>")
 [void]$html.AppendLine((Get-NavHTML))
 

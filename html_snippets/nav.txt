@@ -1,13 +1,13 @@
-<a href="/index.html" style="display: block; text-align: center;"><img src="/icons/site-logos/site-logo1.svg" alt="Site Logo" style="padding-top: 15.3px; padding-bottom: 6px; padding-right: 15px; padding-left: 15px; margin: 0 auto; max-height: 50px;width: min(var(--max-width), calc(100% - 40px));"></a>
+<a href="/index" style="display: block; text-align: center;"><img src="/icons/site-logos/site-logo1.svg" alt="Site Logo" style="padding-top: 15.3px; padding-bottom: 6px; padding-right: 15px; padding-left: 15px; margin: 0 auto; max-height: 50px;width: min(var(--max-width), calc(100% - 40px));"></a>
 <nav>
         <ul class="desktop-menu">
                 <li style="margin-right: 0px;">
-                    <a href="/index.html" style="padding-top: 6px; padding-bottom: 6px; padding-right: 15px; padding-left: 15px;">
+                    <a href="/index" style="padding-top: 6px; padding-bottom: 6px; padding-right: 15px; padding-left: 15px;">
                         <img src="/icons/bs-logo.svg" alt="Ben Smith Logo" style="width: 35px; margin: 0px; padding-left: 0px;">
                     </a>
                 </li>
-                <li><a href="/p/archive.html" class="navlink">Archive</a></li>
-                <li><a href="/p/everyday.html" class="navlink">Everydays</a></li>
+                <li><a href="/p/archive" class="navlink">Archive</a></li>
+                <li><a href="/p/everyday" class="navlink">Everydays</a></li>
                 <li><a href="https://hachyderm.io/@bensmith" class="navlink" target="_blank">Mastodon</a></li>
                 <li class="hamburger-menu" style="margin-right: 0px;">
                     <a href="javascript:void(0);" onclick="showMobileMenu()">
@@ -16,8 +16,8 @@
                 </li> 
             </ul>
             <ul class="mobile-menu" id="mobile-links">
-                <li><a href="/p/archive.html" class="mobile-menu-link">Archive</a></li>
-                <li><a href="/p/everyday.html" class="mobile-menu-link">Everydays</a></li>
+                <li><a href="/p/archive" class="mobile-menu-link">Archive</a></li>
+                <li><a href="/p/everyday" class="mobile-menu-link">Everydays</a></li>
                 <li><a href="https://hachyderm.io/@bensmith" class="mobile-menu-link">Mastodon</a></li>
             </ul>
         </nav>

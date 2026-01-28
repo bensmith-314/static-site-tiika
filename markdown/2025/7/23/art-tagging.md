@@ -4,6 +4,7 @@ date: 2025-07-23
 time: 18:00
 slug: art-tagging
 summary: In an effort to be transparent, I have started tagging all my artwork with information about each art piece. I didn't start tagging my art pieces until fairly recently. But, I've done my best by going back through my files and notes to make these tags as accurate as possible, but being human, I may have missed a few. This page is for describing what tags I use.
+description: The framework and decisions I make to be transparent about my art creation.
 draft: false
 ---
 # Art Tagging

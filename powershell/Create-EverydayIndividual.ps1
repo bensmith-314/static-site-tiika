@@ -30,19 +30,11 @@ Get-ChildItem -Path $everydaysTiikaPath |
 Sort-Object -Descending |
 ForEach-Object {
 
-    # Create the StringBuilder for the HTML
-    $html = New-Object System.Text.StringBuilder
-
-    [void]$html.AppendLine((Get-HeadHTML))
-    [void]$html.AppendLine("<body><main>")
-    [void]$html.AppendLine((Get-NavHTML))
-
     # 1. Remove the Extension
     $baseName = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
 
     # 2. Split into number and title
     $numberPart, $titlePart = $baseName -split '-', 2
-
 
     # 3. Trim leading zeros from the number
     $number = [int]$numberPart  # This automatically removes leading zeros
@@ -61,6 +53,24 @@ ForEach-Object {
 
     $currentImagePath = Join-Path $PSScriptRoot "../../tiika/i/$number.html"
 
+    # 6. Build Custom Description
+    $description = "Day $number of the Everyday Artwork Project by Ben Smith, which explores distraction, abstraction, obsession, discipline, and joy."
+
+    # Create the StringBuilder for the HTML
+    $html = New-Object System.Text.StringBuilder
+
+    [void]$html.AppendLine((
+        Get-HeadHTML -Title $title `
+                    -Description $description `
+                    -Keywords @("Tiika", "Human-made", "Artwork", "Everyday", "Daily", "Ben Smith") `
+                    -PageURL "https://tiika.co/i/$number" `
+                    -ImageURL "https://tiika.co/everydays/$($_.Name)" `
+                    -ImageDescription "$title - Day $number of the Everyday Artwork Project by Ben Smith"
+                    
+    ))
+    [void]$html.AppendLine("<body><main>")
+    [void]$html.AppendLine((Get-NavHTML))
+
     # h1, hr, and iamge
     [void]$html.AppendLine("<h1>$displayName</h1>")
     [void]$html.AppendLine("<hr>")
@@ -71,13 +81,13 @@ ForEach-Object {
     [void]$html.AppendLine("<div class=`"image-navigation`"><ul>")
 
     if ($number -ne 1) {
-        [void]$html.AppendLine("<li><a href=`"$($number - 1).html`">Previous</a></li>")
+        [void]$html.AppendLine("<li><a href=`"$($number - 1)`">Previous</a></li>")
     }
     
     [void]$html.AppendLine("<li><a href=`"#`" id=`"randomArtPiece`">Random</a></li>")
 
     if ($number -lt $totalFiles) {
-        [void]$html.AppendLine("<li><a href=`"$($number + 1).html`">Next</a></li>")
+        [void]$html.AppendLine("<li><a href=`"$($number + 1)`">Next</a></li>")
     }
 
     [void]$html.AppendLine("</ul></div>")

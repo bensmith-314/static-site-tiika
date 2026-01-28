@@ -4,7 +4,11 @@ $html = New-Object System.Text.StringBuilder
 $homePath = Join-Path $PSScriptRoot "../../tiika/index.html"
 
 # Add parts to it
-[void]$html.AppendLine((Get-HeadHTML))
+[void]$html.AppendLine((
+    Get-HeadHTML -Title "Tiika" `
+                 -Description "Tiika is a collection of artwork and writings made by Ben Smith" `
+                 -Keywords @("Tiika", "Human-made", "Homepage", "Ben Smith")
+))
 [void]$html.AppendLine("<body><main>")
 [void]$html.AppendLine((Get-NavHTML))
 
@@ -19,7 +23,7 @@ $daysSince = ($today - $artDayZero).Days + 1
 
 
 $itemCount = 0
-$maxItemCount = 20
+$maxItemCount = 35
 # Load the JSON metadata file
 $articleInfoPath = Join-Path $PSScriptRoot "../json/articleInfo.json"
 $articleInfo = Get-Content $articleInfoPath -Raw | ConvertFrom-Json
@@ -31,11 +35,12 @@ $articleList = foreach ($slug in $articleInfo.PSObject.Properties.Name) {
     $dateTime = [datetime]::ParseExact($dateTimeString, "yyyy-MM-dd HH:mm", $null)
 
     [PSCustomObject]@{
-        Slug     = $slug
-        Title    = $info.title
-        DateTime = $dateTime
-        Summary  = $info.summary
-        Draft    = $info.draft
+        Slug        = $slug
+        Title       = $info.title
+        DateTime    = $dateTime
+        Summary     = $info.summary
+        Description = $info.description
+        Draft       = $info.draft
     }
 }
 

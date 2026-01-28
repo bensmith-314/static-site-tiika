@@ -4,6 +4,7 @@ date: 2025-07-04
 time: 21:00
 slug: about-everydays
 summary: The true genesis of this project dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.
+description: How I started the everday project and what initially inspired it.
 draft: false
 ---
 # About The Everyday Art Project

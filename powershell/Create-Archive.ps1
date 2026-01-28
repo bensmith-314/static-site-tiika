@@ -4,7 +4,12 @@ $html = New-Object System.Text.StringBuilder
 $archivePath = Join-Path $PSScriptRoot "../../tiika/p/archive.html"
 
 # Add parts to it
-[void]$html.AppendLine((Get-HeadHTML))
+[void]$html.AppendLine((
+    Get-HeadHTML -Title "Article Archive" `
+                 -Description "An archive of all the articles and words I have written" `
+                 -Keywords @("Tiika", "Archive", "Human-made", "Article", "Ben Smith") `
+                 -PageURL "https://tiika.co/archive"
+))
 [void]$html.AppendLine("<body><main>")
 [void]$html.AppendLine((Get-NavHTML))
 
