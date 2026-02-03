@@ -2,6 +2,9 @@
 .DS_Store
 */.DS_Store
 
+# Illustrator Files
+*/.ai
+
 # Large Everyday Image Files, may need to re-add
 everydays/*
 
