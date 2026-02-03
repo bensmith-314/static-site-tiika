@@ -1,30 +1,25 @@
 . "$PSScriptRoot/Get-Snippets.ps1"
 
-$everydaysPath = Join-Path $PSScriptRoot "../everydays/"
-$everydaysTiikaPath = Join-Path $PSScriptRoot "../../tiika/everydays/"
+# Resolve to absolute paths (without ..)
+$everydaysPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays/"))
+$everydaysTiikaPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everydays/"))
+$jsonPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../json/artInfo.json"))
+
+# Ensure trailing slashes for rsync
+if (-not $everydaysPath.EndsWith('/')) { $everydaysPath += '/' }
+if (-not $everydaysTiikaPath.EndsWith('/')) { $everydaysTiikaPath += '/' }
+
 $totalFiles = (Get-ChildItem $everydaysPath).Count
-$jsonPath = Join-Path $PSScriptRoot "../json/artInfo.json"
 
 # Load JSON into Script
 $jsonData = Get-Content $jsonPath -Raw | ConvertFrom-Json
 
 # Sync everydays from static generator to tiika
-Get-ChildItem $everydaysPath | 
-ForEach-Object {
-    $sourceImage = $_.FullName 
-    $targetImage = Join-Path $everydaysTiikaPath $_.Name 
-
-    # Check if the given source image exists, if not copy it over
-    if (-not (Test-Path $targetImage)) { 
-        Write-Host "[Copying]" -NoNewline -BackgroundColor Blue
-        Write-Host " $($_.Name)" -NoNewline
-        Copy-Item $sourceImage $targetImage
-        Write-Host "`r[Copied]" -NoNewline -BackgroundColor Green
-        Write-Host " $($_.Name)    "
-    }
-}
-
-# rsync -av $everydaysPath $everydaysTiikaPath > $null 2>&1
+rsync -av --update `
+  --include='*.jpg' `
+  --exclude='*' `
+  "$everydaysPath" `
+  "$everydaysTiikaPath"
 
 Get-ChildItem -Path $everydaysTiikaPath | 
 Sort-Object -Descending |

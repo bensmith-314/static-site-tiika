@@ -1,10 +1,11 @@
 # Directory Variables
 $websiteImagesOriginPath = "/Users/bensmith/Documents/Tiika/Website Images/"
-$everydaysPath = Join-Path $PSScriptRoot "../everydays/"
-$everydaysSmallPath = Join-Path $PSScriptRoot "../everydays_small/"
+$everydaysPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays/"))
+$everydaysSmallPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays_small/"))
 
-# TKTKTK Create some kind of staging area for art pieces to be put and then renamed
-# Then put in the appropriate folders
+# Ensure trailing slashes for rsync
+if (-not $everydaysPath.EndsWith('/')) { $everydaysPath += '/' }
+if (-not $everydaysSmallPath.EndsWith('/')) { $everydaysSmallPath += '/' }
 
 # Verify Folder Exists
 New-Item -ItemType Directory -Path $everydaysPath -Force | Out-Null
@@ -12,44 +13,23 @@ New-Item -ItemType Directory -Path $everydaysPath -Force | Out-Null
 # Copy everydays from Website Images to working directory (only if missing/changed)
 Write-Host "Copying images over to the site generator"
 
-# Get-ChildItem $websiteImagesOriginPath -File |
-# Where-Object { $_.Extension -eq ".jpg" } |
-# ForEach-Object {
-#     $src = $_
-#     $targetImage = Join-Path $everydaysPath $src.Name
-#     $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
-
-#     if ($null -eq $dst -or $src.Length -ne $dst.Length -or $src.LastWriteTime -gt $dst.LastWriteTime) {
-#         Copy-Item $src.FullName $targetImage -Force
-#     }
-# }
-
 rsync -av --update `
   --include='*.jpg' `
   --exclude='*' `
   "$websiteImagesOriginPath/" `
-  "$everydaysPath"
-
-Pause
+  "$everydaysPath" > $null 2>&1
 
 # Verify Folder Exists
 New-Item -ItemType Directory -Path $everydaysSmallPath -Force | Out-Null
 
-# Resize new images from everydays to everydays_small
-Get-ChildItem -Path $everydaysPath -File |
-Where-Object { $_.Extension -eq ".jpg" } |
+# Resize only images that don't yet exist in everydays_small
+Get-ChildItem -Path $everydaysPath -File -Filter "*.jpg" |
 ForEach-Object {
-    $src = $_
-    $targetImage = Join-Path $everydaysSmallPath $src.Name
-    $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
-
-    if ($null -eq $dst -or $src.LastWriteTime -gt $dst.LastWriteTime) {
-        sips -Z 300 $src.FullName --out $targetImage > $null 2>&1
+    $target = Join-Path $everydaysSmallPath $_.Name
+    if (-not (Test-Path $target)) {
+        sips -Z 300 $_.FullName --out $target > $null 2>&1
     }
 }
-
-# Testing where this issue is with everyday syncing TKTKTK remove when resolved
-Write-Host "$((Get-ChildItem $everydaysPath | Measure-Object).Count) Files in $everydaysPath"
 
 # Create Everydays Artwork Gallery
 . "$PSScriptRoot/Create-EverydayGallery.ps1"
@@ -72,35 +52,39 @@ ForEach-Object {
 
 # Copy Over Images From Local to Site (only if missing or changed)
 
-$articleImagesOriginPath      = Join-Path $PSScriptRoot "../images/"
-$articleImagesDestinationPath = Join-Path $PSScriptRoot "../../tiika/images"
+# Copy Over Images From Local to Site (only if missing or changed)
+
+$articleImagesOriginPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../images/"))
+$articleImagesDestinationPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/images/"))
+
+# Ensure trailing slashes for rsync
+if (-not $articleImagesOriginPath.EndsWith('/')) { $articleImagesOriginPath += '/' }
+if (-not $articleImagesDestinationPath.EndsWith('/')) { $articleImagesDestinationPath += '/' }
 
 Write-Host "Copying article images to site output"
 
-Get-ChildItem -Path $articleImagesOriginPath -Recurse -File |
-Where-Object { $_.Extension -in @(".jpg", ".svg") } |
-ForEach-Object {
-    $src = $_
+rsync -av --update `
+  --include='*.jpg' `
+  --include='*.svg' `
+  --exclude='*' `
+  "$articleImagesOriginPath" `
+  "$articleImagesDestinationPath"# Copy Over Images From Local to Site (only if missing or changed)
 
-    # Compute relative path safely
-    $relativePath = $src.FullName.Substring($articleImagesOriginPath.Length)
-    $targetPath   = Join-Path $articleImagesDestinationPath $relativePath
+$articleImagesOriginPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../images/"))
+$articleImagesDestinationPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/images/"))
 
-    # Ensure destination directory exists
-    $targetDir = Split-Path $targetPath -Parent
-    New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+# Ensure trailing slashes for rsync
+if (-not $articleImagesOriginPath.EndsWith('/')) { $articleImagesOriginPath += '/' }
+if (-not $articleImagesDestinationPath.EndsWith('/')) { $articleImagesDestinationPath += '/' }
 
-    $dst = Get-Item $targetPath -ErrorAction SilentlyContinue
+Write-Host "Copying article images to site output"
 
-    if (
-        $null -eq $dst -or
-        $src.Length -ne $dst.Length -or
-        $src.LastWriteTime -gt $dst.LastWriteTime
-    ) {
-        Copy-Item $src.FullName $targetPath -Force
-        Write-Host "[Copied]" $relativePath
-    }
-}
+rsync -av --update `
+  --include='*.jpg' `
+  --include='*.svg' `
+  --exclude='*' `
+  "$articleImagesOriginPath" `
+  "$articleImagesDestinationPath"
 
 # Generate Article JSON
 . "$PSScriptRoot/Create-ArticleJSON.ps1"

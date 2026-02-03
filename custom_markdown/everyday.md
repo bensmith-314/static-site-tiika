@@ -2,8 +2,6 @@
 
 ***
 
-Here is a reverse chronological selection of all the everyday artwork I've created.
+Here is every art piece I've done as part of the Everyday Project. 
 
-Information on the origins of this project can be found [here](/p/2025/7/4/about-everydays.html).
-
-Information on the way I tag the artwork can be found [here](/p/2025/7/23/art-tagging.html)
+Information on the [origins](/p/2025/7/4/about-everydays.html) of this project and the [metadata](/p/2025/7/23/art-tagging.html) I provide for my artwork is available.

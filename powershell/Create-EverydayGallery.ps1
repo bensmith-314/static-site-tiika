@@ -1,9 +1,14 @@
 . "$PSScriptRoot/Get-Snippets.ps1"
 
-$everydaysSmallPath = Join-Path $PSScriptRoot "../everydays_small/"
-$everydaysSmallTiikaPath = Join-Path $PSScriptRoot "../../tiika/everydays_small/"
-$everydayGalleryPath = Join-Path $PSScriptRoot "../../tiika/p/everyday.html"
-$jsonPath = Join-Path $PSScriptRoot "../json/artInfo.json"
+# Resolve to absolute paths (without ..)
+$everydaysSmallPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays_small/"))
+$everydaysSmallTiikaPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everydays_small/"))
+$everydayGalleryPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/p/everyday.html"))
+$jsonPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../json/artInfo.json"))
+
+# Ensure trailing slashes for rsync source and destination
+if (-not $everydaysSmallPath.EndsWith('/')) { $everydaysSmallPath += '/' }
+if (-not $everydaysSmallTiikaPath.EndsWith('/')) { $everydaysSmallTiikaPath += '/' }
 
 # Load JSON into Script
 $jsonData = Get-Content $jsonPath -Raw | ConvertFrom-Json
@@ -14,19 +19,11 @@ Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaP
 New-Item -ItemType Directory -Path $everydaysSmallTiikaPath -Force | Out-Null
 
 # Sync everydays_small from static generator to tiika
-Get-ChildItem $everydaysSmallPath -File |
-Where-Object { $_.Extension -eq ".jpg" } |
-ForEach-Object {
-    $src = $_
-    $targetImage = Join-Path $everydaysSmallTiikaPath $src.Name
-    $dst = Get-Item $targetImage -ErrorAction SilentlyContinue
-
-    if ($null -eq $dst) {
-        Copy-Item $src.FullName $targetImage -Force
-    }
-}
-
-# rsync -av $everydaysSmallPath $everydaysSmallTiikaPath > $null 2>&1
+rsync -av --update `
+  --include='*.jpg' `
+  --exclude='*' `
+  "$everydaysSmallPath" `
+  "$everydaysSmallTiikaPath"
 
 Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaPath | Measure-Object).Count) Files in $everydaysSmallTiikaPath"
 
