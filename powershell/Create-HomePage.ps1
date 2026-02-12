@@ -23,7 +23,7 @@ $daysSince = ($today - $artDayZero).Days + 1
 
 
 $itemCount = 0
-$maxItemCount = 35
+$maxItemCount = 100
 # Load the JSON metadata file
 $articleInfoPath = Join-Path $PSScriptRoot "../json/articleInfo.json"
 $articleInfo = Get-Content $articleInfoPath -Raw | ConvertFrom-Json
@@ -74,9 +74,9 @@ while ($itemCount -le $maxItemCount) {
 
             [void]$html.AppendLine("<div class=`"home-page-art-container`">")
             [void]$html.AppendLine("<div class=`"home-page-art-image`">")
-            [void]$html.AppendLine("<a href=`"/i/$daysSince.html`"><img src=`"/everydays_small/$artFileName.jpg`"></a></div>")
+            [void]$html.AppendLine("<a href=`"/i/$daysSince`"><img src=`"/everydays_small/$artFileName.jpg`"></a></div>")
             [void]$html.AppendLine("<div class=`"home-page-art-text`">")
-            [void]$html.AppendLine("<a href=`"/i/$daysSince.html`"><h2>$artName</h2></a>")
+            [void]$html.AppendLine("<a href=`"/i/$daysSince`"><h2>$artName</h2></a>")
 
             # Date and Application
             if ($null -ne $jsonData.art_pieces.$daysSince.date) {
@@ -116,12 +116,12 @@ while ($itemCount -le $maxItemCount) {
 
 
             [void]$html.AppendLine("<div class=`"home-page-article-container`">")
-            [void]$html.AppendLine("<a href=`"/p/$($articleDate.Year)/$($articleDate.Month)/$($articleDate.Day)/$($sortedArticles[$currentArticleNumber].Slug).html`">")
+            [void]$html.AppendLine("<a href=`"/p/$($articleDate.Year)/$($articleDate.Month)/$($articleDate.Day)/$($sortedArticles[$currentArticleNumber].Slug)`">")
             [void]$html.AppendLine("<h2>$articleName</h2></a>")
             [void]$html.AppendLine("<p>Ben Smith | $(Get-Date $sortedArticles[$currentArticleNumber].DateTime -Format "MMMM, dd, yyyy")</p>")
             [void]$html.AppendLine("<img src=`"/images/$($sortedArticles[$currentArticleNumber].Slug)/$($sortedArticles[$currentArticleNumber].Slug)-hero.jpg`">")
             [void]$html.AppendLine("<p>$($sortedArticles[$currentArticleNumber].Summary)</p>")
-            [void]$html.AppendLine("<p><a href=`"/p/$($articleDate.Year)/$($articleDate.Month)/$($articleDate.Day)/$($sortedArticles[$currentArticleNumber].Slug).html`">Read More</a></p>")
+            [void]$html.AppendLine("<p><a href=`"/p/$($articleDate.Year)/$($articleDate.Month)/$($articleDate.Day)/$($sortedArticles[$currentArticleNumber].Slug)`">Read More</a></p>")
             [void]$html.AppendLine("</div>")
 
 
@@ -134,15 +134,14 @@ while ($itemCount -le $maxItemCount) {
     }
 }
 
-# Get the nth oldest (0-based index)
-# $n = 0
-# $nthOldest = $sortedArticles[$n]
-
-# Write-Host "Slug: $($nthOldest.Slug)"
-# Write-Host "DateTime: $($nthOldest.DateTime)"
-# Write-Host "Title: $($nthOldest.Title)"
-
-
+# You've Reached the Bottom Section
+[void]$html.AppendLine("<div class=`"home-page-art-container`">")
+[void]$html.AppendLine("<div class=`"home-page-art-text`">")
+[void]$html.AppendLine("<h2>It Looks Like You've Reached The End</h2>")
+[void]$html.AppendLine("<p>The fact that you reached the end tells me one of two things, first that you scrolled to the bottom just to see what was there (I like you), or that you might enjoy what you are seeing. If the latter is the case, you should take a look at my artwork <a href=`"/p/everyday`">gallery</a> if you want to see more art.")
+[void]$html.AppendLine("To see more of the articles, words, and random thoughts that I've had and written down, take a look at my article <a href=`"/p/archive`">archive</a>.")
+[void]$html.AppendLine("Or, if you want the latest updates or if you want to see more send me a message, reach out to me on <a href=`"https://hachyderm.io/@bensmith`">Mastodon</a>. I check it far more often than I probably should.</p>")
+[void]$html.AppendLine("</div></div>")
 
 # Scripts
 [void]$html.AppendLine("<script src=`"/js/menu.js`"></script><script src=`"/js/randomArt.js`"></script></main>")

@@ -4,7 +4,7 @@ date: 2025-07-04
 time: 21:00
 slug: about-everydays
 summary: The true genesis of this project dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.
-description: How I started the everday project and what initially inspired it.
+description: How I started the everyday project and what initially inspired it.
 draft: false
 ---
 # About The Everyday Art Project
@@ -14,7 +14,7 @@ Ben Smith | July 4, 2025
 <figcaption>A selection of some of my favorite art pieces from over the years </figcaption>
 </figure>
 
-The true genesis of this [project](/p/everyday.html) dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.
+The true genesis of this [project](/p/everyday) dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.
 
 <figure><img src="/images/about-everydays/about-everydays1.svg" alt="A simplified recreation of my first grade assignment illustrating how straight lines can look curved"><figcaption>A simplified recreation of my first grade assignment illustrating how straight lines can look curved</figcaption></figure>
 
@@ -30,7 +30,7 @@ It was a good learning experience for me, I created a few dozen of art pieces in
 
 I remember sitting in the study areas before and after class at Boise State University working on my first project in Illustrator. Flipping from a raster to a vector application was a mind bending change at first. My first art piece in Illustrator took around 8 hours to complete. Despite this, I absolutely loved the whole process.
 
-<figure><img src="/images/about-everydays/about-everydays3.jpg" alt="My original Adobe Illustrator Art Piece titled Overlooking Paradize"><figcaption>My original Adobe Illustrator Art Piece titled Overlooking Paradize</figcaption></figure>
+<figure><img src="/images/about-everydays/about-everydays3.jpg" alt="My original Adobe Illustrator Art Piece titled Overlooking Paradise"><figcaption>My original Adobe Illustrator Art Piece titled Overlooking Paradise</figcaption></figure>
 
 It only took a couple of weeks of creating artwork in Illustrator for me to fall in love with the application and the design process. I was spending my free time watching tutorials, learning and testing new tools in the application, and trying to make new things I had only dreamed of making before. I created another dozen art pieces over the course of the next few months, through early March 2021. 
 

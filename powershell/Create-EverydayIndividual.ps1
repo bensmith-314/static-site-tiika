@@ -14,14 +14,7 @@ $totalFiles = (Get-ChildItem $everydaysPath).Count
 # Load JSON into Script
 $jsonData = Get-Content $jsonPath -Raw | ConvertFrom-Json
 
-# Sync everydays from static generator to tiika
-rsync -av --update `
-  --include='*.jpg' `
-  --exclude='*' `
-  "$everydaysPath" `
-  "$everydaysTiikaPath"
-
-Get-ChildItem -Path $everydaysTiikaPath | 
+Get-ChildItem -Path $everydaysTiikaPath -Filter "*.jpg" |  
 Sort-Object -Descending |
 ForEach-Object {
 

@@ -33,7 +33,7 @@ ForEach-Object {
 
         # Parse Date and Get Link To Article
         $date = Get-Date -Year $year -Month $month -Day $day -Format "MMMM, dd, yyyy"
-        $link = "p/$year/$([int]$month)/$([int]$day)/$slug.html"
+        $link = "p/$year/$([int]$month)/$([int]$day)/$slug"
 
         $lines = Get-Content $_.FullName
         $title = $lines | Where-Object { $_ -match '^# ' } | Select-Object -First 1

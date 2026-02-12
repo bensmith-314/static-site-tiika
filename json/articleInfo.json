@@ -1,18 +1,18 @@
 {
+  "about-everydays": {
+    "title": "About The Everyday Art Project",
+    "date": "2025-07-04",
+    "time": "21:00",
+    "summary": "The true genesis of this project dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.",
+    "description": "How I started the everyday project and what initially inspired it.",
+    "draft": false
+  },
   "art-tagging": {
     "title": "Art Tagging",
     "date": "2025-07-23",
     "time": "18:00",
     "summary": "In an effort to be transparent, I have started tagging all my artwork with information about each art piece. I didn't start tagging my art pieces until fairly recently. But, I've done my best by going back through my files and notes to make these tags as accurate as possible, but being human, I may have missed a few. This page is for describing what tags I use.",
     "description": "The framework and decisions I make to be transparent about my art creation.",
-    "draft": false
-  },
-  "about-everydays": {
-    "title": "About The Everyday Art Project",
-    "date": "2025-07-04",
-    "time": "21:00",
-    "summary": "The true genesis of this project dates back to first-grade orientation when I was given a sheet of paper with a box, a ruler, and a pencil. The exact details of the assignment are fuzzy to me now all these years later, but I imaging that we were given a series of steps that had us mark increments on the bottom and right sides of the box. Labeling each increment, then taking the ruler and drawing a straight line to each matching number. The resultant image is a low-poly curved line made out of nothing but straight lines. As a five-year-old, this blew my mind.",
-    "description": "How I started the everday project and what initially inspired it.",
     "draft": false
   }
 }

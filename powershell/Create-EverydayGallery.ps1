@@ -2,30 +2,14 @@
 
 # Resolve to absolute paths (without ..)
 $everydaysSmallPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays_small/"))
-$everydaysSmallTiikaPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everydays_small/"))
 $everydayGalleryPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/p/everyday.html"))
 $jsonPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../json/artInfo.json"))
 
 # Ensure trailing slashes for rsync source and destination
 if (-not $everydaysSmallPath.EndsWith('/')) { $everydaysSmallPath += '/' }
-if (-not $everydaysSmallTiikaPath.EndsWith('/')) { $everydaysSmallTiikaPath += '/' }
 
 # Load JSON into Script
 $jsonData = Get-Content $jsonPath -Raw | ConvertFrom-Json
-
-Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaPath | Measure-Object).Count) Files in $everydaysSmallTiikaPath"
-
-# Verify Folder Exists
-New-Item -ItemType Directory -Path $everydaysSmallTiikaPath -Force | Out-Null
-
-# Sync everydays_small from static generator to tiika
-rsync -av --update `
-  --include='*.jpg' `
-  --exclude='*' `
-  "$everydaysSmallPath" `
-  "$everydaysSmallTiikaPath"
-
-Write-Host "In Create-EverydayGallery.ps1 $((Get-ChildItem $everydaysSmallTiikaPath | Measure-Object).Count) Files in $everydaysSmallTiikaPath"
 
 # Create the StringBuilder for the HTML
 $html = New-Object System.Text.StringBuilder
@@ -71,7 +55,7 @@ ForEach-Object {
         $displayName = "Day $number`: $title"
     }
 
-    $imageHTML = "<a href=`"/i/$number.html`" title = `"$displayName`">`n`t<img src=`"/../everydays_small/$($_.Name)`" alt=`"$displayName`">`n</a>"
+    $imageHTML = "<a href=`"/i/$number`" title = `"$displayName`">`n`t<img src=`"/../everydays_small/$($_.Name)`" alt=`"$displayName`">`n</a>"
 
     [void]$html.AppendLine($imageHTML)
 }
