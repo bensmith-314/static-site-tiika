@@ -65,16 +65,18 @@ while ($itemCount -le $maxItemCount) {
         # Then increase the number of items and make the current art piece one day earlier
 
             $currentArthtml = Get-Content (Join-Path $PSScriptRoot "../../tiika/i/$daysSince.html") -Raw
+
+            if ($currentArthtml -match '<img[^>]*src="[^"]*everydays/([^"]+)"') {
+                $artFileName = [System.IO.Path]::GetFileNameWithoutExtension($matches[1])
+            }
+
             if ($currentArthtml -match '<h1[^>]*>(.*?)</h1>') {
                 $artName = $matches[1]
             }
 
-            $artFileName = $artName -Replace "Day\s"
-            $artFileName = $artFileName -Replace ":?\s+", "-"
-
             [void]$html.AppendLine("<div class=`"home-page-art-container`">")
             [void]$html.AppendLine("<div class=`"home-page-art-image`">")
-            [void]$html.AppendLine("<a href=`"/i/$daysSince`"><img src=`"/everydays_small/$artFileName.jpg`"></a></div>")
+            [void]$html.AppendLine("<a href=`"/i/$daysSince`"><img src=`"/everydays/$artFileName.jpg`"></a></div>")
             [void]$html.AppendLine("<div class=`"home-page-art-text`">")
             [void]$html.AppendLine("<a href=`"/i/$daysSince`"><h2>$artName</h2></a>")
 
