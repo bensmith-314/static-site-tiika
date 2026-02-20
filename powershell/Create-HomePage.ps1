@@ -80,18 +80,13 @@ while ($itemCount -le $maxItemCount) {
             [void]$html.AppendLine("<div class=`"home-page-art-text`">")
             [void]$html.AppendLine("<a href=`"/i/$daysSince`"><h2>$artName</h2></a>")
 
-            # Date and Application
-            if ($null -ne $jsonData.art_pieces.$daysSince.date) {
-                [void]$html.AppendLine("<p>$($jsonData.art_pieces.$daysSince.date) | Created in: $($jsonData.art_pieces.$daysSince.application)</p>")
-            } else {
-                # Date
-                if (($null -ne $jsonData.art_pieces.$daysSince.date) -and ($null -ne $jsonData.art_pieces.$daysSince.application)) {
-                    [void]$html.AppendLine("<p>$($jsonData.art_pieces.$daysSince.date)</p>")
-                }
-                # Application
-                if ($null -ne $jsonData.art_pieces.$daysSince.application) {
-                    [void]$html.AppendLine("<p>Created in: $($jsonData.art_pieces.$daysSince.application)</p>")
-                }
+            # Date
+            if (($null -ne $jsonData.art_pieces.$daysSince.date) -and ($null -ne $jsonData.art_pieces.$daysSince.application)) {
+                [void]$html.AppendLine("<p>$($jsonData.art_pieces.$daysSince.date)</p>")
+            }
+            # Application
+            if ($null -ne $jsonData.art_pieces.$daysSince.application) {
+                [void]$html.AppendLine("<p>Created in: $($jsonData.art_pieces.$daysSince.application)</p>")
             }
             
             # AI Model
