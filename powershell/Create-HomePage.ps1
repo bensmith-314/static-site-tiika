@@ -81,21 +81,25 @@ while ($itemCount -le $maxItemCount) {
             [void]$html.AppendLine("<a href=`"/i/$daysSince`"><h2>$artName</h2></a>")
 
             # Date
-            if (($null -ne $jsonData.art_pieces.$daysSince.date) -and ($null -ne $jsonData.art_pieces.$daysSince.application)) {
-                [void]$html.AppendLine("<p>$($jsonData.art_pieces.$daysSince.date)</p>")
+            if (($null -ne $artinfo.art_pieces.$daysSince.date) -and ($null -ne $artinfo.art_pieces.$daysSince.application)) {
+                [void]$html.AppendLine("<p>$($artinfo.art_pieces.$daysSince.date)</p>")
             }
             # Application
-            if ($null -ne $jsonData.art_pieces.$daysSince.application) {
-                [void]$html.AppendLine("<p>Created in: $($jsonData.art_pieces.$daysSince.application)</p>")
+            if ($null -ne $artinfo.art_pieces.$daysSince.application) {
+                [void]$html.AppendLine("<p>Created in: $($artinfo.art_pieces.$daysSince.application)</p>")
             }
             
             # AI Model
-            if ($null -ne $jsonData.art_pieces.$daysSince.model) {
-                [void]$html.AppendLine("<p>Created with assistance from $($jsonData.art_pieces.$daysSince.model)</p>")
+            if ($null -ne $artinfo.art_pieces.$daysSince.model) {
+                [void]$html.AppendLine("<p>Created with assistance from $($artinfo.art_pieces.$daysSince.model)</p>")
             }
             # Stock
-            if ($jsonData.art_pieces.$daysSince.stock) {
+            if ($artinfo.art_pieces.$daysSince.stock) {
                 [void]$html.AppendLine("<p>Created with assistance from one or more stock photos</p>")
+            }
+            # Caption
+            if ($null -ne $artinfo.art_pieces.$daysSince.caption) {
+                [void]$html.AppendLine("<p>$($artinfo.art_pieces.$daysSince.caption)</p>")
             }
 
             [void]$html.AppendLine("</div></div>")
