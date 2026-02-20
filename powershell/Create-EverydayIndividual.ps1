@@ -80,6 +80,13 @@ ForEach-Object {
 
     [void]$html.AppendLine("</ul></div>")
 
+    # Caption
+    if ($null -ne $jsonData.art_pieces.$key.caption) {
+        [void]$html.AppendLine("<div class=`"art-caption-container`">")
+        [void]$html.AppendLine("<p>$($jsonData.art_pieces.$key.caption)</p>")
+        [void]$html.AppendLine("</div>")
+    }
+
     # Art Piece Info
     [void]$html.AppendLine("<div class=`"art-info-container`"><ul>")
     [void]$html.AppendLine("<li>Information About This Piece:</li>")

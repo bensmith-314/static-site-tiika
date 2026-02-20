@@ -5,11 +5,8 @@ bash $syncScript
 # Create Everydays Artwork Gallery
 . "$PSScriptRoot/Create-EverydayGallery.ps1"
 
-# Create Art Pieces Dates JSON Structure
-. "$PSScriptRoot/Create-ArtDateJSON.ps1"
-
-# Merge Art Dates and Art Metadata JSON Objects into Art Info JSON
-. "$PSScriptRoot/Merge-JSON.ps1"
+# Create Art JSON
+. "$PSScriptRoot/Create-ArtJSON.ps1"
 
 # Create Everydays Individual Pages
 . "$PSScriptRoot/Create-EverydayIndividual.ps1"
