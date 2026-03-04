@@ -5,6 +5,9 @@ bash $syncScript
 # Create Everydays Artwork Gallery
 . "$PSScriptRoot/Create-EverydayGallery.ps1"
 
+# Create Artwork Page
+. "$PSScriptRoot/Create-ArtworkPage.ps1"
+
 # Create Art JSON
 . "$PSScriptRoot/Create-ArtJSON.ps1"
 
@@ -21,7 +24,7 @@ ForEach-Object {
 . "$PSScriptRoot/Create-ArticleJSON.ps1"
 
 # Create Archive Page 
-. "$PSScriptRoot/Create-Archive.ps1"
+. "$PSScriptRoot/Create-ArticleArchive.ps1"
 
 # Make Home Page
 . "$PSScriptRoot/Create-HomePage.ps1"

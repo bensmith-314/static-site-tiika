@@ -1,4 +1,4 @@
-# Archive
+# Articles
 
 A complete list of articles that I have written.
 

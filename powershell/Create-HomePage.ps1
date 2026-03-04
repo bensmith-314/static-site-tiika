@@ -139,7 +139,7 @@ while ($itemCount -le $maxItemCount) {
 [void]$html.AppendLine("<div class=`"home-page-art-container`">")
 [void]$html.AppendLine("<div class=`"home-page-art-text`">")
 [void]$html.AppendLine("<h2>It Looks Like You've Reached The End</h2>")
-[void]$html.AppendLine("<p>The fact that you reached the end tells me one of two things, first that you scrolled to the bottom just to see what was there (I like you), or that you might enjoy what you are seeing. If the latter is the case, you should take a look at my artwork <a href=`"/p/everyday`">gallery</a> if you want to see more art.")
+[void]$html.AppendLine("<p>The fact that you reached the end tells me one of two things, first that you scrolled to the bottom just to see what was there (I like you), or that you might enjoy what you are seeing. If the latter is the case, you should take a look at my artwork <a href=`"/p/artwork`">gallery</a> if you want to see more art.")
 [void]$html.AppendLine("To see more of the articles, words, and random thoughts that I've had and written down, take a look at my article <a href=`"/p/archive`">archive</a>.")
 [void]$html.AppendLine("Or, if you want the latest updates or if you want to see more send me a message, reach out to me on <a href=`"https://hachyderm.io/@bensmith`">Mastodon</a>. I check it far more often than I probably should.</p>")
 [void]$html.AppendLine("</div></div>")

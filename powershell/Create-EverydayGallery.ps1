@@ -2,7 +2,7 @@
 
 # Resolve to absolute paths (without ..)
 $everydaysSmallPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays_small/"))
-$everydayGalleryPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/p/everyday.html"))
+$everydayGalleryPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everyday.html"))
 $jsonPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../json/artInfo.json"))
 
 # Ensure trailing slashes for rsync source and destination

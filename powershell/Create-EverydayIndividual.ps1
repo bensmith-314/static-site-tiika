@@ -72,6 +72,7 @@ ForEach-Object {
         [void]$html.AppendLine("<li><a href=`"$($number - 1)`">Previous</a></li>")
     }
     
+    [void]$html.AppendLine("<li><a href=`"/everyday`">Gallery</a></li>")
     [void]$html.AppendLine("<li><a href=`"#`" id=`"randomArtPiece`">Random</a></li>")
 
     if ($number -lt $totalFiles) {
