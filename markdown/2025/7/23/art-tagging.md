@@ -12,7 +12,7 @@ By Ben Smith | July 23, 2025
 
 <figure class="hero-image"><img src="/images/art-tagging/art-tagging-hero.jpg" alt="Everyday Art Piece Day 3: Artifacting Our World"><figcaption>How we choose to allocate our time and resources reflects our values. Everyday Art Piece 3: Artifacting Our World</figcaption></figure>
 
-In an effort to be transparent, I have started tagging all my artwork with information about each art piece. I didn't start tagging my art pieces until fairly recently. But, I've done my best by going back through my files and notes to make these tags as accurate as possible, but being human, I may have missed a few. This page is for describing what tags I use.
+In an effort to be transparent, I have started tagging all my artwork in the everyday [project](/everyday) with information about each art piece. I didn't start tagging my art pieces until fairly recently. But, I've done my best by going back through my files and notes to make these tags as accurate as possible, but being human, I may have missed a few. This page is for describing what tags I use.
 ## Artwork Tags
 The things I try to document for all my artwork:
 
