@@ -8,7 +8,7 @@ if (Test-Path $metadataPath) {
 }
 
 # 2. Count total pieces
-$everydaysPath = Join-Path $PSScriptRoot "../everydays/"
+$everydaysPath = Join-Path $PSScriptRoot "../../tiika/everydays/"
 $totalPieces = (Get-ChildItem $everydaysPath -Filter "*.jpg").Count
 
 # 3. Generate full artInfo with defaults + overrides

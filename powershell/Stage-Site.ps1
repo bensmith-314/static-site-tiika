@@ -33,7 +33,7 @@ ForEach-Object {
 . "$PSScriptRoot/Create-ArtSquarePage.ps1"
 
 # Update randomArt.js
-$artCount = (Get-ChildItem -Path (Join-Path $PSScriptRoot "../everydays_small") -Filter "*.jpg" | 
+$artCount = (Get-ChildItem -Path (Join-Path $PSScriptRoot "../../tiika/everydays_small") -Filter "*.jpg" | 
     Where-Object { $_.Name -notmatch ' \d+\.jpg$' }).Count
 
 $randomArt = Get-Content (Join-Path $PSScriptRoot "../js/randomArt.txt") -Raw

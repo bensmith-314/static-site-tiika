@@ -1,7 +1,7 @@
 . "$PSScriptRoot/Get-Snippets.ps1"
 
 # Resolve to absolute paths (without ..)
-$everydaysPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../everydays/"))
+$everydaysPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everydays/"))
 $everydaysTiikaPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../tiika/everydays/"))
 $jsonPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../json/artInfo.json"))
 
